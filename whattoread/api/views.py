@@ -51,4 +51,29 @@ class AddBookView(APIView):
                 return Response([{'message': 'Book Added'}, serializers.BookSerializer(book).data], 
                                 status=status.HTTP_201_CREATED)
         else:
-            return Response([{'message': 'Invalid Data'}, serializer.errors], status=status.HTTP_400_BAD_REQUEST)
+            return Response([{'message': 'Invalid Data'}, serializer.errors], 
+                            status=status.HTTP_400_BAD_REQUEST)
+
+class DelBookView(APIView):
+    serializer_class = serializers.DelBookSerializer
+    
+    def post(self, request, format=None):
+        serializer = self.serializer_class(data=request.data)
+        
+        if serializer.is_valid():
+            uuid = serializer.data["uuid"]
+            
+            queryset = models.Book.objects.filter(id=uuid)
+            
+            if queryset.exists():
+                book = queryset[0]
+                book.delete()
+                
+                return Response([{'message': 'Book Deleted'}, serializers.BookSerializer(book).data],
+                                status=status.HTTP_200_OK)
+            else:
+                return Response([{'message': 'Book Not Found'}],
+                                status=status.HTTP_404_NOT_FOUND)
+        else:
+            return Response([{'message': 'Invalid Data'}, serializer.errors], 
+                            status=status.HTTP_400_BAD_REQUEST)
