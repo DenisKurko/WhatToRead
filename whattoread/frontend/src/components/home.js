@@ -9,6 +9,7 @@ import {
 
 import Search from "./search";
 import Profile from "./profile";
+import AddBook from "./addbook"
 
 export default class Home extends Component{
     constructor(props){
@@ -22,6 +23,7 @@ export default class Home extends Component{
                 <Route path='/' element={<p>HOME PAGE</p>}/>
                 <Route path='/profile' element={<Profile/>}/>
                 <Route path='/search' element={<Search/>}/>
+                <Route path='/addbook' element={<AddBook/>}/>
             </Routes>
         </Router>
         );
