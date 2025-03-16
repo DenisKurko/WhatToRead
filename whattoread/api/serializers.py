@@ -14,6 +14,8 @@ class CreateBookSerializer(serializers.ModelSerializer):
                   'language', 'price', 'isdiscount', 'discount', 'discount_price') 
         
 class DelBookSerializer(serializers.ModelSerializer):    
+    uuid = serializers.UUIDField()
+    
     class Meta:
         model = models.Book
         fields = ('uuid',)

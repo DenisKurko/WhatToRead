@@ -61,9 +61,9 @@ class DelBookView(APIView):
         serializer = self.serializer_class(data=request.data)
         
         if serializer.is_valid():
-            uuid = serializer.data["uuid"]
+            uuid = serializer.validated_data["uuid"]
             
-            queryset = models.Book.objects.filter(id=uuid)
+            queryset = models.Book.objects.filter(uuid=uuid)
             
             if queryset.exists():
                 book = queryset[0]
